@@ -9,6 +9,7 @@ These scripts are only meant to be used as a reference. If you intend to use the
 #### Pre-requisites:
 
 - NetBackup 8.1.1 or higher
+- NetBackup 8.1.4 or higher for using API keys related APIs and samples
 - Perl v5.18.2
 - Perl modules Text::Table, JSON and LWP
 
@@ -79,4 +80,19 @@ ISO 8601 formatted UTC timestamp.
 no a subscription associated with this asset.
 
   - Example: perl post_nb_asset_cleanup.pl -nbmaster <master_server> -username <username> -password <pass> -filter "workloadType eq 'VMware'" -cleanuptime 2018-06-29T15:58:45.678Z
+
+
+API key Details:
+
+- Use the following command to create an API key for yourself on your NetBackup Master server:
+  - `perl apikey_create.pl -nbmaster <master_server> -login_username <username> -login_password <password> [-login_domainname <domain_name> -login_domaintype <domain_type>] -expiryindays <expiryindays> -description <description> [--verbose]`
+  
+- Use the following command to create an API key for other user on your NetBackup Master server:
+  - `perl apikey_create.pl -nbmaster <master_server> -login_username <login_username> -login_password <login_password> [-login_domainname <login_domainname> -login_domaintype <login_domaintype>] -apikey_username <apikey_username> -apikey_domainname <apikey_domainname> -apikey_domaintype <apikey_domaintype> -expiryindays <expiryindays> -description <description> [--verbose]`
+  
+- Use the following command to delete an API key on your NetBackup Master server with apikey tag provided:
+  - `perl apikey_delete.pl -nbmaster <master_server> -login_username <username> -login_password <password> [-login_domainname <domain_name> -login_domaintype <domain_type>] -apikey_tag <apikey_tag> [--verbose]`
+  
+- Use the following command to use API key instead of JWT to trigger a NetBackup REST API on your NetBackup Master server:
+  - `perl apikey_usage.pl -nbmaster <master_server> -apikey <apikey> [--verbose]`
 
